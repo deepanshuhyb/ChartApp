@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+
 import {
   LineChart,
   Line,
@@ -11,6 +13,8 @@ import {
 } from 'recharts'
 
 export default function StockChart () {
+  const { id } = useParams()
+  console.log('Stock Name:', id)
   const instrument = `NSE_EQ|INE615H01020`
   const [chartType, setChartType] = useState('line')
   const [timeframe, setTimeframe] = useState({ label: '1minute', days: 7 })
@@ -24,6 +28,7 @@ export default function StockChart () {
     const formattedStartDate = startDate.toISOString().split('T')[0]
 
     async function fetchStockData () {
+      // if (!id) return
       try {
         const response = await fetch(
           `https://api.upstox.com/v2/historical-candle/${instrument}/${timeframe.label}/${today}/${formattedStartDate}`,
@@ -59,7 +64,7 @@ export default function StockChart () {
       }
     }
     fetchStockData()
-  }, [timeframe])
+  }, [timeframe, id])
 
   const timeframes = [
     { name: 'Today', label: '1minute', days: 1 },

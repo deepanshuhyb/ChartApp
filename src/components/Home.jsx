@@ -1,8 +1,15 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-export default function Home () {
+export default function Home ({ OnSearch }) {
+  const navigate = useNavigate()
   const [query, setQuery] = useState('')
 
+  function handleClick (e) {
+    if (e.key === 'Enter' || e.type === 'click') {
+      if (query.trim() !== '') navigate(`/${query}`)
+    }
+  }
   return (
     <>
       <div className='h-screen bg-backgr px-4 py-2 w-full flex flex-col items-center justify-center'>
@@ -19,9 +26,12 @@ export default function Home () {
             value={query}
             onChange={e => setQuery(e.target.value)}
             className='bg-[#222937] rounded-lg w-full h-12 md:h-14 text-white px-4 focus:outline-none border-2 border-transparent focus:border-teal-500 transition'
-            onKeyPress={e => e.key === 'Enter' && e.preventDefault()}
+            onKeyDown={handleClick}
           />
-          <button className='bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition'>
+          <button
+            className='bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition'
+            onClick={handleClick}
+          >
             Search
           </button>
         </form>
