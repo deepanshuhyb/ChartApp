@@ -1,4 +1,8 @@
+import { useState } from 'react'
+
 export default function Home () {
+  const [query, setQuery] = useState('')
+
   return (
     <>
       <div className='h-screen bg-backgr px-4 py-2 w-full flex flex-col items-center justify-center'>
@@ -12,7 +16,10 @@ export default function Home () {
           <input
             type='text'
             placeholder='Search for the stock...'
+            value={query}
+            onChange={e => setQuery(e.target.value)}
             className='bg-[#222937] rounded-lg w-full h-12 md:h-14 text-white px-4 focus:outline-none border-2 border-transparent focus:border-teal-500 transition'
+            onKeyPress={e => e.key === 'Enter' && e.preventDefault()}
           />
           <button className='bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition'>
             Search

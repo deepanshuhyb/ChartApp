@@ -45,11 +45,11 @@ const NavbarwithSearch = ({ onSearch }) => {
           className='bg-[#222937] rounded-lg w-full h-10 md:h-12 text-white px-10 focus:outline-none border-2 border-transparent focus:border-teal-500 transition'
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
-          onKeyDown={handleSearch} // Trigger search on Enter
+          onKeyDown={handleSearch}
         />
         <FiSearch
           className='absolute left-3 top-1/2 transform -translate-y-1/2  text-gray-400 text-xl cursor-pointer'
-          onClick={handleSearch} // Trigger search on click
+          onClick={handleSearch}
         />
       </div>
 
