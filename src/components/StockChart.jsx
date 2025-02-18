@@ -42,7 +42,6 @@ export default function StockChart () {
             .reverse()
           setStockData(formattedData)
 
-          // Calculate Profit/Loss Percentage
           if (formattedData.length > 1) {
             const firstPrice = formattedData[0].close
             const lastPrice = formattedData[formattedData.length - 1].close
@@ -71,7 +70,6 @@ export default function StockChart () {
     { name: '5 Years', label: 'week', days: 1825 }
   ]
 
-  // Determine line color based on profit/loss
   const lineColor = profitLoss >= 0 ? '#00ff00' : '#ff4444'
 
   return (
@@ -89,9 +87,6 @@ export default function StockChart () {
             </div>
           )}
         </h2>
-
-        {/* Profit/Loss Display */}
-        {/* Profit/Loss Display - Responsive Fix */}
 
         <div className='w-full h-[300px]'>
           <ResponsiveContainer>

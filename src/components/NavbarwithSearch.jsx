@@ -38,7 +38,6 @@ const NavbarwithSearch = ({ onSearch }) => {
         </a>
       </h1>
 
-      {/* Search Bar */}
       <div className='relative w-full max-w-md mx-4'>
         <input
           type='text'
@@ -54,7 +53,6 @@ const NavbarwithSearch = ({ onSearch }) => {
         />
       </div>
 
-      {/* Menu Button */}
       <div className='md:hidden relative' ref={menuRef}>
         <button onClick={handleClick} className='text-white'>
           <GiHamburgerMenu className='text-2xl' />
