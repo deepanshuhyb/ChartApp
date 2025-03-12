@@ -6,7 +6,7 @@ export default function SearchPage () {
   console.log('Search Query:', query)
   return (
     <>
-      <NavbarwithSearch onSearch={query => setQuery(query)} />
+      <NavbarwithSearch onSearch={search => setQuery(search)} />
       <StockChart />
       <Footer />
     </>

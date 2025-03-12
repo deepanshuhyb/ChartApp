@@ -2,8 +2,11 @@ import React, { useState, useRef, useEffect } from 'react'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { FiSearch } from 'react-icons/fi'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 
 const NavbarwithSearch = ({ onSearch }) => {
+  const nav = useNavigate()
+
   const [open, setOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const menuRef = useRef(null)
@@ -27,11 +30,12 @@ const NavbarwithSearch = ({ onSearch }) => {
   function handleSearch (e) {
     if (e.key === 'Enter' || e.type === 'click') {
       onSearch(searchQuery)
+      nav(`/${searchQuery}`)
     }
   }
 
   return (
-    <div className='h-14 md:h-20 bg-sky-800 md:w-full px-6 flex justify-between items-center shadow-lg'>
+    <div className='h-14 md:h-20 bg-[#09090B] md:w-full px-6 flex justify-between items-center shadow-lg border-b border-white'>
       <h1 className='text-xl md:pl-16 md:text-2xl text-[#FFD700]'>
         <a href='http://localhost:5173/' target='_blank'>
           ChartApp

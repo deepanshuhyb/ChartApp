@@ -7,12 +7,12 @@ export default function Home ({ OnSearch }) {
 
   function handleClick (e) {
     if (e.key === 'Enter' || e.type === 'click') {
-      if (query.trim() !== '') navigate(`/${query}`)
+      if (query.trim() !== '') navigate(`/${query}`, { replace: false })
     }
   }
   return (
     <>
-      <div className='h-screen bg-backgr px-4 py-2 w-full flex flex-col items-center justify-center'>
+      <div className='h-screen bg-[#09090B] px-4 py-2 w-full flex flex-col items-center justify-center'>
         <div className='text-teal-500 font-bold text-3xl md:text-4xl'>
           CHARTAPP
         </div>
@@ -25,7 +25,7 @@ export default function Home ({ OnSearch }) {
             placeholder='Search for the stock...'
             value={query}
             onChange={e => setQuery(e.target.value)}
-            className='bg-[#222937] rounded-lg w-full h-12 md:h-14 text-white px-4 focus:outline-none border-2 border-transparent focus:border-teal-500 transition'
+            className='bg-[#09090B] rounded-lg w-full h-12 md:h-14 text-white px-4 focus:outline-none border-2 border-teal-500 focus:border-white transition'
             onKeyDown={handleClick}
           />
           <button

@@ -23,7 +23,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className='h-14 md:h-20 bg-sky-800 md:w-full px-6 flex justify-between items-center shadow-lg'>
+    <div className='h-14 md:h-20 bg-[#0C0C10] md:w-full px-6 flex justify-between items-center shadow-lg border-b border-white'>
       <h1 className='text-xl md:pl-16 md:text-2xl text-[#FFD700]'>ChartApp</h1>
       <div className='hidden md:flex gap-8 pr-16'>
         <a href='#' className='text-white hover:text-[#FFD700] transition'>
@@ -48,7 +48,7 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className='absolute top-12 right-0 w-44 bg-sky-800 flex flex-col items-center py-4 gap-2 z-50 rounded-lg shadow-lg'
+              className='absolute top-12 right-0 w-44 bg-[#222228] flex flex-col items-center py-4 gap-2 z-50 rounded-lg shadow-lg'
             >
               <a
                 href='#'
