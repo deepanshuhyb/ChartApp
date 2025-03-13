@@ -4,7 +4,7 @@ import { FiSearch } from 'react-icons/fi'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 
-const NavbarwithSearch = ({ onSearch }) => {
+const NavbarwithSearch = () => {
   const nav = useNavigate()
 
   const [open, setOpen] = useState(false)
@@ -29,7 +29,6 @@ const NavbarwithSearch = ({ onSearch }) => {
 
   function handleSearch (e) {
     if (e.key === 'Enter' || e.type === 'click') {
-      onSearch(searchQuery)
       nav(`/${searchQuery}`)
     }
   }

@@ -59,6 +59,8 @@ export default function StockChart () {
         } else {
           setProfitLoss(null)
         }
+
+        setErrorInfo('')
       } else {
         console.error('API error response:', data)
         setErrorInfo(data.errors?.[0]?.message || 'An error occurred')

@@ -6,9 +6,9 @@ export default function Home ({ OnSearch }) {
   const [query, setQuery] = useState('')
 
   function handleClick (e) {
-    if (e.key === 'Enter' || e.type === 'click') {
-      if (query.trim() !== '') navigate(`/${query}`, { replace: false })
-    }
+    e.preventDefault()
+    // if (e.key === 'Enter' || e.type === 'click')
+    if (query.trim() !== '') navigate(`/${query}`, { replace: false })
   }
   return (
     <>
@@ -19,18 +19,22 @@ export default function Home ({ OnSearch }) {
         <div className='text-sm md:text-lg text-teal-700 py-3 text-center'>
           Search, Learn, and Analyze your stocks.
         </div>
-        <form className='pt-4 w-full max-w-lg flex items-center gap-2'>
+        <form
+          className='pt-4 w-full max-w-lg flex items-center gap-2'
+          onSubmit={handleClick}
+        >
           <input
             type='text'
             placeholder='Search for the stock...'
             value={query}
             onChange={e => setQuery(e.target.value)}
             className='bg-[#09090B] rounded-lg w-full h-12 md:h-14 text-white px-4 focus:outline-none border-2 border-teal-500 focus:border-white transition'
-            onKeyDown={handleClick}
+            // onKeyDown={handleClick}
           />
           <button
+            type='submit'
             className='bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition'
-            onClick={handleClick}
+            // onClick={handleClick}
           >
             Search
           </button>
