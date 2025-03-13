@@ -11,12 +11,12 @@ const NavbarwithSearch = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const menuRef = useRef(null)
 
-  useEffect(() => {
-    function handleOutsideClick (e) {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setOpen(false)
-      }
+  function handleOutsideClick (e) {
+    if (menuRef.current && !menuRef.current.contains(e.target)) {
+      setOpen(false)
     }
+  }
+  useEffect(() => {
     document.addEventListener('mousedown', handleOutsideClick)
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick)
@@ -68,7 +68,7 @@ const NavbarwithSearch = ({ onSearch }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className='absolute top-12 right-0 w-44 bg-sky-800 flex flex-col items-center py-4 gap-2 z-50 rounded-lg shadow-lg'
+              className='absolute top-12 right-0 w-44 bg-[#222228] flex flex-col items-center py-4 gap-2 z-50 rounded-lg shadow-lg'
             >
               <a
                 href='#'
