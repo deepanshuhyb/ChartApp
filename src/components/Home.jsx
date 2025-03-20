@@ -8,10 +8,11 @@ export default function Home ({ OnSearch }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [filteredResults, setFilteredResults] = useState([])
 
-  function handleClick (e) {
-    e.preventDefault()
-    if (query.trim() !== '') navigate(`/${query}`, { replace: false })
-  }
+  // function handleClick (e) {
+  //   e.preventDefault()
+  //   if (query.trim() !== '')
+  //     navigate(`/${query.instrument_key}`, { replace: false })
+  // }
 
   useEffect(() => {
     fetch('./complete.json')
@@ -33,7 +34,7 @@ export default function Home ({ OnSearch }) {
           !item.instrument_key.startsWith('NSE_FO') // ❌ Ignore NSE_FO items
       )
       .sort((a, b) => a.name.localeCompare(b.name))
-      .slice(0, 10) // Limit to 5 results
+      .slice(0, 5) // Limit to 5 results
 
     setFilteredResults(results)
   }, [searchQuery, data])
@@ -47,7 +48,7 @@ export default function Home ({ OnSearch }) {
         <div className='text-sm md:text-lg text-teal-700 py-3 text-center'>
           Search, Learn, and Analyze your stocks.
         </div>
-        <form className='pt-4 w-full max-w-lg relative' onSubmit={handleClick}>
+        <form className='pt-4 w-full max-w-lg relative'>
           <div className='relative w-full'>
             <input
               type='text'
@@ -66,9 +67,10 @@ export default function Home ({ OnSearch }) {
                     key={item.instrument_key}
                     className='px-4 py-2 text-white hover:bg-teal-500 cursor-pointer'
                     onClick={() => {
-                      setQuery(item.name)
+                      // setQuery(item.name)
                       setSearchQuery('')
                       setFilteredResults([])
+                      navigate(`/${item.instrument_key}`, { replace: false })
                     }}
                   >
                     {item.name}
@@ -77,12 +79,12 @@ export default function Home ({ OnSearch }) {
               </ul>
             )}
           </div>
-          <button
+          {/* <button
             type='submit'
             className='bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition mt-2 w-full'
           >
             Search
-          </button>
+          </button> */}
         </form>
         <div className='text-white pt-4 text-lg'>Or Analyze</div>
       </div>
