@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Button } from '@/components/ui/button'
 
 import {
   LineChart,
@@ -18,6 +20,7 @@ export default function StockChart () {
   const instrument = id || 'NSE_EQ%7CINE615H01020'
   const [chartType, setChartType] = useState('line')
   const [timeframe, setTimeframe] = useState({ label: '1minute', days: 7 })
+  const [candles, setCandles] = useState()
   const [stockData, setStockData] = useState([])
   const [profitLoss, setProfitLoss] = useState(null)
   const [loader, setLoader] = useState(true)
@@ -43,6 +46,7 @@ export default function StockChart () {
       const data = await response.json()
       console.log('API Response:', data)
       if (data.status === 'success' && data.data && data.data.candles) {
+        setCandles(data.data.candles)
         const formattedData = data.data.candles
           .map(candle => ({
             time: new Date(candle[0]).toLocaleDateString(),
@@ -55,7 +59,7 @@ export default function StockChart () {
           const firstPrice = formattedData[0].close
           const lastPrice = formattedData[formattedData.length - 1].close
           const percentageChange = ((lastPrice - firstPrice) / firstPrice) * 100
-          setProfitLoss(percentageChange.toFixed(2)) // Keep 2 decimal places
+          setProfitLoss(percentageChange.toFixed(2))
         } else {
           setProfitLoss(null)
         }
@@ -78,12 +82,14 @@ export default function StockChart () {
     { name: '1 Week', label: '1minute', days: 7 },
     { name: '1 Month', label: '30minute', days: 30 },
     { name: '6 Months', label: 'day', days: 180 },
-    { name: '1 Year', label: 'week', days: 365 },
+    { name: '1 Year', label: 'day', days: 365 },
     { name: '5 Years', label: 'week', days: 1825 }
   ]
 
-  const lineColor = profitLoss >= 0 ? '#00ff00' : '#ff4444'
+  const lineColor = profitLoss >= 0 ? '#00ff00' : '#D55438'
   console.log('nigga ', errorInfo)
+
+  const xaxis = 'time'
 
   if (errorInfo) {
     return (
@@ -99,25 +105,27 @@ export default function StockChart () {
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen bg-[#09090B]'>
-      <div className='relative flex flex-col items-center bg-[#09090B] p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto'>
+      <div className='relative flex flex-col items-center bg-[#09090B] p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto justify-between'>
         {loader ? (
-          <>loading</>
+          <div className='text-white'>loading...</div>
         ) : (
           <>
+            <div className='flex text-lg pt-sans-narrow-regular text-white'>
+              {id}
+            </div>
             <h2 className='text-[#C0B283] text-2xl font-semibold mb-4'>
               {profitLoss !== null && (
                 <div
                   className={`absolute top-4 right-4 px-3 py-1 rounded-lg font-semibold flex items-center justify-center ${
                     profitLoss >= 0 ? 'text-green-400' : 'text-red-400'
                   } text-sm sm:text-base md:text-lg`}
-                  style={{ maxWidth: '150px', wordBreak: 'break-word' }}
                 >
                   {profitLoss >= 0 ? `📈 +${profitLoss}%` : `📉 ${profitLoss}%`}
                 </div>
               )}
             </h2>
 
-            <div className='w-full h-[300px]'>
+            <div className='w-[700px] h-[300px]'>
               <ResponsiveContainer>
                 {chartType === 'line' ? (
                   <LineChart
@@ -135,6 +143,7 @@ export default function StockChart () {
                       stroke='#999999'
                       tick={{ fontSize: 10, fill: '#dddddd' }}
                       tickLine={false}
+                      // dataKey='auto'
                       domain={['auto', 'auto']}
                     />
                     <Tooltip
@@ -149,8 +158,8 @@ export default function StockChart () {
                     <Line
                       type='monotone'
                       dataKey='close'
-                      stroke={lineColor} // Dynamic line color
-                      strokeWidth={1.5}
+                      stroke={lineColor}
+                      strokeWidth={2.25}
                       dot={false}
                     />
                   </LineChart>
@@ -190,9 +199,9 @@ export default function StockChart () {
               {timeframes.map(tf => (
                 <button
                   key={tf.name}
-                  className={`px-3 py-1 rounded-lg text-white bg-gray-800 hover:bg-gray-700 ${
+                  className={`px-3 py-1 rounded-lg text-white hover:bg-gray-700 ${
                     timeframe.label === tf.label && timeframe.days === tf.days
-                      ? 'opacity-75'
+                      ? 'opacity-50'
                       : ''
                   }`}
                   onClick={() =>
@@ -206,7 +215,7 @@ export default function StockChart () {
 
             <div className='flex flex-row gap-4 mt-4'>
               <button
-                className={`px-4 py-2 rounded-lg font-semibold transition bg-gray-800 hover:bg-gray-700 text-white ${
+                className={`px-4 py-2 rounded-lg font-semibold transition hover:bg-gray-700 text-white ${
                   chartType === 'line' ? 'opacity-75' : ''
                 }`}
                 onClick={() => setChartType('line')}
@@ -214,7 +223,7 @@ export default function StockChart () {
                 Line Chart
               </button>
               <button
-                className={`px-4 py-2 rounded-lg font-semibold transition bg-gray-800 hover:bg-gray-700 text-white ${
+                className={`px-4 py-2 rounded-lg font-semibold transition hover:bg-gray-700 text-white ${
                   chartType === 'bar' ? 'opacity-75' : ''
                 }`}
                 onClick={() => setChartType('bar')}
@@ -224,6 +233,19 @@ export default function StockChart () {
             </div>
           </>
         )}
+
+        <div className='text-white'>something</div>
+      </div>
+
+      <div className='gap-2 flex items-center'>
+        <Checkbox />
+        <label
+          htmlFor='terms'
+          className='text-white text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+        >
+          Accept terms and conditions
+        </label>
+        <Button variant='outline'>Button</Button>
       </div>
     </div>
   )
