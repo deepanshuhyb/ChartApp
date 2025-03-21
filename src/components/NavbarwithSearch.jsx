@@ -63,6 +63,7 @@ const NavbarwithSearch = () => {
     setSearchQuery(item.name)
     nav(`/${item.instrument_key}`)
     setFilteredResults([])
+    setSearchQuery('')
   }
 
   return (

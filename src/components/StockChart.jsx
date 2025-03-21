@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
+import useStockNames from '@/hooks/useStockNames'
+import loading from '../assets/loader.svg'
 
 import {
   LineChart,
@@ -16,7 +18,9 @@ import {
 
 export default function StockChart () {
   const { id } = useParams()
+  const { stockNames, getStockNameById } = useStockNames()
   console.log('Stock Name:', id)
+  const [latestClose, setLatestClose] = useState(null)
   const instrument = id || 'NSE_EQ%7CINE615H01020'
   const [chartType, setChartType] = useState('line')
   const [timeframe, setTimeframe] = useState({ label: '1minute', days: 7 })
@@ -54,6 +58,11 @@ export default function StockChart () {
           }))
           .reverse()
         setStockData(formattedData)
+        if (formattedData.length > 0) {
+          setLatestClose(formattedData[formattedData.length - 1].close) // Set latest closing value
+        } else {
+          setLatestClose(null)
+        }
 
         if (formattedData.length > 1) {
           const firstPrice = formattedData[0].close
@@ -105,32 +114,42 @@ export default function StockChart () {
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen bg-[#09090B]'>
-      <div className='relative flex flex-col items-center bg-[#09090B] p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto justify-between'>
+      <div className='relative flex flex-col items-center bg-[#09090B] p-6 pt-0 rounded-lg shadow-xl w-full max-w-7xl mx-auto justify-between'>
         {loader ? (
-          <div className='text-white'>loading...</div>
+          <div className='text-white'>
+            loading...
+            <img src={loading} alt='loading' className='w-12 h-12' />
+          </div>
         ) : (
           <>
-            <div className='flex text-lg pt-sans-narrow-regular text-white'>
-              {id}
-            </div>
-            <h2 className='text-[#C0B283] text-2xl font-semibold mb-4'>
-              {profitLoss !== null && (
-                <div
-                  className={`absolute top-4 right-4 px-3 py-1 rounded-lg font-semibold flex items-center justify-center ${
-                    profitLoss >= 0 ? 'text-green-400' : 'text-red-400'
-                  } text-sm sm:text-base md:text-lg`}
-                >
-                  {profitLoss >= 0 ? `📈 +${profitLoss}%` : `📉 ${profitLoss}%`}
+            <div className='flex text-lg h-32 pt-sans-narrow-regular pt-4 text-white w-screen mb-4 relative md:static'>
+              <h2 className='text-white md:text-2xl font-sans text-xl font-semibold px-4 absolute left-12 top-12 md:static'>
+                {getStockNameById(id)}
+                <div className='flex gap-1'>
+                  {latestClose !== null && <div>₹{latestClose}</div>}
+                  {profitLoss !== null && (
+                    <div
+                      className={` font-semibold flex items-center justify-center ${
+                        profitLoss >= 0 ? 'text-green-400' : 'text-red-400'
+                      } text-sm sm:text-base md:text-lg`}
+                    >
+                      {profitLoss >= 0
+                        ? `📈 +${profitLoss}%`
+                        : `📉 ${profitLoss}%`}
+                    </div>
+                  )}
                 </div>
-              )}
-            </h2>
-
-            <div className='w-[700px] h-[300px]'>
+              </h2>
+              {/* <h2 className='text-[#C0B283] text-2xl font-semibold mb-4'>
+                {id}
+              </h2> */}
+            </div>
+            <div className='w-full max-w-[700px] h-[300px]'>
               <ResponsiveContainer>
                 {chartType === 'line' ? (
                   <LineChart
                     data={stockData}
-                    margin={{ top: 10, right: 10, left: -5, bottom: 5 }}
+                    margin={{ top: 10, right: 10, left: -25, bottom: 5 }}
                   >
                     <XAxis
                       dataKey='time'
@@ -166,7 +185,7 @@ export default function StockChart () {
                 ) : (
                   <ComposedChart
                     data={stockData}
-                    margin={{ top: 10, right: 10, left: -5, bottom: 5 }}
+                    margin={{ top: 10, right: 10, left: -25, bottom: 5 }}
                   >
                     <XAxis
                       dataKey='time'
