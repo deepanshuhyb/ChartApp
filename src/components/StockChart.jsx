@@ -59,7 +59,7 @@ export default function StockChart () {
           .reverse()
         setStockData(formattedData)
         if (formattedData.length > 0) {
-          setLatestClose(formattedData[formattedData.length - 1].close) // Set latest closing value
+          setLatestClose(formattedData[formattedData.length - 1].close)
         } else {
           setLatestClose(null)
         }
@@ -122,8 +122,8 @@ export default function StockChart () {
           </div>
         ) : (
           <>
-            <div className='flex text-lg h-32 pt-sans-narrow-regular pt-4 text-white w-screen mb-4 relative md:static'>
-              <h2 className='text-white md:text-2xl font-sans text-xl font-semibold px-4 absolute left-12 top-12 md:static'>
+            <div className='flex text-lg h-32 pt-sans-narrow-regular pt-4 text-white w-screen md:pl-72 md:pt-8 mb-4 relative md:static md:w-full'>
+              <h2 className='text-white md:text-2xl font-sans text-xl font-semibold px-4 absolute left-12 top-12 md:static md:w-full'>
                 {getStockNameById(id)}
                 <div className='flex gap-1'>
                   {latestClose !== null && <div>₹{latestClose}</div>}
@@ -140,9 +140,6 @@ export default function StockChart () {
                   )}
                 </div>
               </h2>
-              {/* <h2 className='text-[#C0B283] text-2xl font-semibold mb-4'>
-                {id}
-              </h2> */}
             </div>
             <div className='w-full max-w-[700px] h-[300px]'>
               <ResponsiveContainer>
@@ -214,7 +211,7 @@ export default function StockChart () {
               </ResponsiveContainer>
             </div>
 
-            <div className='flex flex-wrap gap-2 mt-4'>
+            <div className='justify-center gap-2 flex flex-wrap mt-4'>
               {timeframes.map(tf => (
                 <button
                   key={tf.name}
@@ -232,7 +229,7 @@ export default function StockChart () {
               ))}
             </div>
 
-            <div className='flex flex-row gap-4 mt-4'>
+            <div className='flex flex-row gap-4 pt-4 mt-4'>
               <button
                 className={`px-4 py-2 rounded-lg font-semibold transition hover:bg-gray-700 text-white ${
                   chartType === 'line' ? 'opacity-75' : ''
