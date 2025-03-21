@@ -211,11 +211,11 @@ export default function StockChart () {
               </ResponsiveContainer>
             </div>
 
-            <div className='justify-center gap-2 flex flex-wrap mt-4'>
+            <div className='justify-center gap-3 flex flex-wrap mt-4'>
               {timeframes.map(tf => (
                 <button
                   key={tf.name}
-                  className={`px-3 py-1 rounded-lg text-white hover:bg-gray-700 ${
+                  className={`px-3 py-1 border-2 rounded-lg text-white hover:bg-gray-700 ${
                     timeframe.label === tf.label && timeframe.days === tf.days
                       ? 'opacity-50'
                       : ''
