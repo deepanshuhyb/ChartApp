@@ -41,7 +41,7 @@ export default function Home ({ OnSearch }) {
 
   return (
     <>
-      <div className='h-screen md:h-[calc(100vh-9rem)] bg-[#09090B] px-4 py-2 w-full flex flex-col items-center justify-center'>
+      <div className='h-[calc(100vh-7.5rem)] md:h-[calc(100vh-9rem)] bg-[#09090B] px-4 py-2 w-full flex flex-col items-center justify-center'>
         <div className='text-teal-500 font-bold text-3xl md:text-4xl'>
           CHARTAPP
         </div>
