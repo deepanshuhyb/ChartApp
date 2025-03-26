@@ -1,5 +1,5 @@
 import { Navbar, Footer, StockChart, NavbarwithSearch } from './components'
-import { useState } from 'react'
+// import { useState } from 'react'
 
 export default function SearchPage () {
   // const [query, setQuery] = useState('')

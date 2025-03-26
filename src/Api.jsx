@@ -1,13 +1,14 @@
-import { Navbar, Home, Footer } from './components/'
+import React from 'react'
 import { BackgroundBeamsWithCollision } from './components/ui/background-beams-with-collision'
-export default function HomePage () {
+
+function Api () {
   return (
     <>
-      <Navbar />
       <BackgroundBeamsWithCollision>
-        <Home />
+        <div className='h-screen bg-[#09090B] w-screen'>Api</div>
       </BackgroundBeamsWithCollision>
-      <Footer />
     </>
   )
 }
+
+export default Api
