@@ -69,11 +69,7 @@ const NavbarwithSearch = () => {
   return (
     <div className='h-14 md:h-20 bg-[#09090B] md:w-full px-6 flex justify-between items-center shadow-lg border-b border-white'>
       <h1 className='text-xl md:pl-16 md:text-2xl text-[#FFD700]'>
-        <a
-          href='http://localhost:5173/'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
+        <a href='/' target='_blank' rel='noopener noreferrer'>
           ChartApp
         </a>
       </h1>
