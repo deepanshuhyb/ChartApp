@@ -29,7 +29,7 @@ const Navbar = () => {
         <a href='#' className='text-white hover:text-[#FFD700] transition'>
           Home
         </a>
-        <a href='#' className='text-white hover:text-[#FFD700] transition'>
+        <a href='/api' className='text-white hover:text-[#FFD700] transition'>
           API Reference
         </a>
         <a href='#' className='text-white hover:text-[#FFD700] transition'>
@@ -57,7 +57,7 @@ const Navbar = () => {
                 Home
               </a>
               <a
-                href='#'
+                href='/api'
                 className='text-white hover:text-[#FFD700] py-2 w-full text-center transition'
               >
                 API Reference
