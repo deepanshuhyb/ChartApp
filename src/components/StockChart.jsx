@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
 import useStockNames from '@/hooks/useStockNames'
 import loading from '../assets/loader.svg'
-
 import {
   LineChart,
   Line,
@@ -15,16 +14,18 @@ import {
   ComposedChart,
   Bar
 } from 'recharts'
+import CandlestickChart from './CandlestickChart'
 
 export default function StockChart () {
   const { id } = useParams()
-  const { stockNames, getStockNameById } = useStockNames()
+
+  const { getStockNameById } = useStockNames()
+  const [candles, setCandles] = useState('')
   console.log('Stock Name:', id)
   const [latestClose, setLatestClose] = useState(null)
   const instrument = id || 'NSE_EQ%7CINE615H01020'
   const [chartType, setChartType] = useState('line')
   const [timeframe, setTimeframe] = useState({ label: '1minute', days: 7 })
-  const [candles, setCandles] = useState()
   const [stockData, setStockData] = useState([])
   const [profitLoss, setProfitLoss] = useState(null)
   const [loader, setLoader] = useState(true)
@@ -96,10 +97,10 @@ export default function StockChart () {
   ]
 
   const lineColor = profitLoss >= 0 ? '#00ff00' : '#D55438'
-  console.log('nigga ', errorInfo)
+  // console.log('nigga ', errorInfo)
 
-  const xaxis = 'time'
-
+  // const xaxis = 'time'
+  // console.log(candles)
   if (errorInfo) {
     return (
       <>
@@ -141,7 +142,7 @@ export default function StockChart () {
                 </div>
               </h2>
             </div>
-            <div className='w-full max-w-[700px] h-[300px]'>
+            <div className='w-full max-w-[800px] h-[350px]'>
               <ResponsiveContainer>
                 {chartType === 'line' ? (
                   <LineChart
@@ -180,33 +181,37 @@ export default function StockChart () {
                     />
                   </LineChart>
                 ) : (
-                  <ComposedChart
-                    data={stockData}
-                    margin={{ top: 10, right: 10, left: -25, bottom: 5 }}
-                  >
-                    <XAxis
-                      dataKey='time'
-                      stroke='#999999'
-                      tick={{ fill: '#dddddd' }}
-                      tickLine={false}
-                    />
-                    <YAxis
-                      stroke='#999999'
-                      tick={{ fill: '#dddddd' }}
-                      tickLine={false}
-                      domain={['auto', 'auto']}
-                    />
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: '#2a2a2a',
-                        borderRadius: '8px',
-                        border: 'none',
-                        color: '#fff'
-                      }}
-                      labelStyle={{ color: '#C0B283' }}
-                    />
-                    <Bar dataKey='close' fill={lineColor} barSize={3} />
-                  </ComposedChart>
+                  <div className='border-2 w-[850px]  h-[310px] border-white md:block hidden '>
+                    <CandlestickChart candles={candles} />
+                  </div>
+
+                  // <ComposedChart
+                  //   data={stockData}
+                  //   margin={{ top: 10, right: 10, left: -25, bottom: 5 }}
+                  // >
+                  //   <XAxis
+                  //     dataKey='time'
+                  //     stroke='#999999'
+                  //     tick={{ fill: '#dddddd' }}
+                  //     tickLine={false}
+                  //   />
+                  //   <YAxis
+                  //     stroke='#999999'
+                  //     tick={{ fill: '#dddddd' }}
+                  //     tickLine={false}
+                  //     domain={['auto', 'auto']}
+                  //   />
+                  //   <Tooltip
+                  //     contentStyle={{
+                  //       backgroundColor: '#2a2a2a',
+                  //       borderRadius: '8px',
+                  //       border: 'none',
+                  //       color: '#fff'
+                  //     }}
+                  //     labelStyle={{ color: '#C0B283' }}
+                  //   />
+                  //   <Bar dataKey='close' fill={lineColor} barSize={3} />
+                  // </ComposedChart>
                 )}
               </ResponsiveContainer>
             </div>
@@ -231,7 +236,7 @@ export default function StockChart () {
 
             <div className='flex flex-row gap-4 pt-4 mt-4'>
               <button
-                className={`px-4 py-2 rounded-lg font-semibold transition hover:bg-gray-700 text-white ${
+                className={`px-4 py-2 rounded-lg border-2 font-semibold transition hover:bg-gray-700 text-white ${
                   chartType === 'line' ? 'opacity-75' : ''
                 }`}
                 onClick={() => setChartType('line')}
@@ -239,12 +244,12 @@ export default function StockChart () {
                 Line Chart
               </button>
               <button
-                className={`px-4 py-2 rounded-lg font-semibold transition hover:bg-gray-700 text-white ${
+                className={`px-4 py-2 rounded-lg border-2 font-semibold hidden md:block transition hover:bg-gray-700 text-white ${
                   chartType === 'bar' ? 'opacity-75' : ''
                 }`}
-                onClick={() => setChartType('bar')}
+                onClick={() => setChartType('candle')}
               >
-                Bar Chart
+                Candlestick data
               </button>
             </div>
           </>
@@ -259,10 +264,11 @@ export default function StockChart () {
           htmlFor='terms'
           className='text-white text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
         >
-          Accept terms and conditions
+          Want to learn and get insights?
         </label>
-        <Button variant='outline'>Button</Button>
+        <Button variant='outline'>Yes</Button>
       </div>
+      <div className='text-white'>a</div>
     </div>
   )
 }
