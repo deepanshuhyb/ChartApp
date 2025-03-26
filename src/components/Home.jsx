@@ -86,7 +86,7 @@ export default function Home ({ OnSearch }) {
             Search
           </button> */}
         </form>
-        <div className='text-white pt-4 text-lg'>Or Analyze</div>
+        {/* <div className='text-white pt-4 text-lg'>Or Analyze</div> */}
       </div>
     </>
   )
