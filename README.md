@@ -1,7 +1,7 @@
 # ChartApp
 
 ## Overview
-ChartApp is a web application that allows users to visualize data using interactive charts. It is built using **React.js, Next.js, and TypeScript**, ensuring a seamless and modern user experience.
+ChartApp is a web application that allows users to visualize data using interactive charts. It is built using **React.js, Next.js, and JavaScript**, ensuring a seamless and modern user experience.
 
 ## Features
 - **Interactive Charts** – Supports various chart types like bar, line, pie, and more.
@@ -11,8 +11,8 @@ ChartApp is a web application that allows users to visualize data using interact
 - **Customization** – Allows users to modify chart parameters.
 
 ## Tech Stack
-- **Frontend**: React.js, Next.js (App Router), TypeScript, Tailwind CSS
-- **Charting Library**: Recharts / Chart.js / Lightweight Charts
+- **Frontend**: React.js, Next.js (App Router), JavaScript, Tailwind CSS
+- **Charting Library**: Recharts / Lightweight Charts
 - **API**: Upstox API
 
 ## Installation
