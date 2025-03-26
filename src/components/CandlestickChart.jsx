@@ -3,32 +3,30 @@ import { createChart, CandlestickSeries, ColorType } from 'lightweight-charts'
 
 const CandlestickChart = ({ candles }) => {
   const chartContainerRef = useRef(null)
+  const tooltipRef = useRef(null)
+
+  // const transformData = candles => {
+  //   return candles.map(([timestamp, open, high, low, close]) => ({
+  //     time: Math.floor(new Date(timestamp).getTime() / 1000),
+  //     open,
+  //     high,
+  //     low,
+  //     close
+  //   }))
+  // }
 
   const transformData = candles => {
-    return candles.map(([timestamp, open, high, low, close]) => ({
-      time: Math.floor(new Date(timestamp).getTime() / 1000),
+    return candles.map(([timeStamp, open, high, low, close]) => ({
+      time: Math.floor(new Date(timeStamp).getTime() / 1000),
       open,
       high,
       low,
       close
     }))
   }
-  // console.log(candles)
 
-  const rawData = [
-    ['2025-03-25T15:29:00+05:30', 120, 130, 115, 125, 69636, 0],
-    ['2025-03-26T15:30:00+05:30', 125, 135, 120, 130, 50000, 0],
-    ['2025-03-27T15:31:00+05:30', 130, 140, 125, 138, 45000, 0],
-    ['2025-03-28T15:32:00+05:30', 138, 145, 130, 142, 60000, 0],
-    ['2025-03-29T15:33:00+05:30', 142, 148, 138, 145, 55000, 0]
-  ]
   const data = transformData(candles)
   data.reverse()
-  console.log(data)
-  //
-
-  // const newData = transformData(rawData)
-  // console.log(newData)
 
   useEffect(() => {
     if (!chartContainerRef.current) return
@@ -55,21 +53,67 @@ const CandlestickChart = ({ candles }) => {
       wickDownColor: '#ef5350'
     })
 
+    newSeries.setData(data)
+
     const handleResize = () => {
       chart.applyOptions({ width: chartContainerRef.current.clientWidth })
     }
-    newSeries.setData(data)
 
     window.addEventListener('resize', handleResize)
 
+    const tooltip = tooltipRef.current
+    tooltip.style.zIndex = '10'
+    chart.subscribeCrosshairMove(param => {
+      if (!param || !param.seriesData || param.seriesData.size === 0) {
+        tooltip.style.display = 'none'
+        return
+      }
+
+      const dataPoint = param.seriesData.get(newSeries)
+      if (!dataPoint) return
+
+      const { time, open, high, low, close } = dataPoint
+      tooltip.style.display = 'block'
+      tooltip.innerHTML = `
+        <strong>Time:</strong> ${new Date(time * 1000).toLocaleString()}<br/>
+        <strong>Open:</strong> ${open}<br/>
+        <strong>High:</strong> ${high}<br/>
+        <strong>Low:</strong> ${low}<br/>
+        <strong>Close:</strong> ${close}
+      `
+      tooltip.style.left = `${param.point.x + 10}px`
+      tooltip.style.top = `${param.point.y - 10}px`
+    })
+
     return () => {
       window.removeEventListener('resize', handleResize)
-
       chart.remove()
     }
   }, [candles])
 
-  return <div ref={chartContainerRef} />
+  return (
+    <div style={{ position: 'relative' }}>
+      <div
+        ref={chartContainerRef}
+        style={{ position: 'relative', zIndex: '1' }}
+      />
+      <div
+        ref={tooltipRef}
+        style={{
+          position: 'absolute',
+          display: 'none',
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          color: 'white',
+          padding: '8px',
+          borderRadius: '4px',
+          pointerEvents: 'none',
+          fontSize: '12px',
+          transform: 'translate(-50%, -100%)',
+          zIndex: '10'
+        }}
+      />
+    </div>
+  )
 }
 
 export default CandlestickChart
