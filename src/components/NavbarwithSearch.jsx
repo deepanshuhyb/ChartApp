@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { FiSearch } from 'react-icons/fi'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -11,6 +11,7 @@ const NavbarwithSearch = () => {
   const [searchData, setSearchData] = useState([])
   const [filteredResults, setFilteredResults] = useState([])
   const menuRef = useRef(null)
+  const debounceRef = useRef(null)
 
   useEffect(() => {
     fetch('/complete.json')
@@ -31,23 +32,26 @@ const NavbarwithSearch = () => {
     }
   }, [])
 
-  useEffect(() => {
-    if (searchQuery.trim() === '') {
-      setFilteredResults([])
-      return
-    }
+  const filteredResultsMemo = useMemo(() => {
+    if (searchQuery.trim() === '') return []
 
-    const results = searchData
+    return searchData
       .filter(
         item =>
           item.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-          !item.instrument_key.startsWith('NSE_FO') // ❌ Ignore NSE_FO items
+          !item.instrument_key.startsWith('NSE_FO')
       )
       .sort((a, b) => a.name.localeCompare(b.name))
       .slice(0, 10)
-
-    setFilteredResults(results)
   }, [searchQuery, searchData])
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setFilteredResults(filteredResultsMemo)
+    }, 300)
+
+    return () => clearTimeout(handler)
+  }, [filteredResultsMemo])
 
   function handleClick () {
     setOpen(!open)
@@ -114,22 +118,22 @@ const NavbarwithSearch = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className='absolute top-12 right-0 w-44 bg-[#222228] flex flex-col items-center py-4 gap-2 z-50 rounded-lg shadow-lg'
+              className='absolute top-12 right-0 w-44 bg-[#222228]/70 backdrop-blur-md flex flex-col items-center py-4 gap-2 z-50 rounded-lg shadow-lg'
             >
               <a
-                href='#'
+                href='/'
                 className='text-white hover:text-[#FFD700] py-2 w-full text-center transition'
               >
                 Home
               </a>
               <a
-                href='#'
+                href='api'
                 className='text-white hover:text-[#FFD700] py-2 w-full text-center transition'
               >
                 API Reference
               </a>
               <a
-                href='#'
+                href='contact'
                 className='text-white hover:text-[#FFD700] py-2 w-full text-center transition'
               >
                 Contact

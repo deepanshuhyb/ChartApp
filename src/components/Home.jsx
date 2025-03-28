@@ -8,12 +8,6 @@ export default function Home ({ OnSearch }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [filteredResults, setFilteredResults] = useState([])
 
-  // function handleClick (e) {
-  //   e.preventDefault()
-  //   if (query.trim() !== '')
-  //     navigate(`/${query.instrument_key}`, { replace: false })
-  // }
-
   useEffect(() => {
     fetch('./complete.json')
       .then(data => data.json())
@@ -31,13 +25,21 @@ export default function Home ({ OnSearch }) {
       .filter(
         item =>
           item.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-          !item.instrument_key.startsWith('NSE_FO') // ❌ Ignore NSE_FO items
+          !item.instrument_key.startsWith('NSE_FO')
       )
       .sort((a, b) => a.name.localeCompare(b.name))
-      .slice(0, 5) // Limit to 5 results
+      .slice(0, 5)
 
     setFilteredResults(results)
   }, [searchQuery, data])
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearchQuery(query)
+    }, 300)
+
+    return () => clearTimeout(handler)
+  }, [query])
 
   return (
     <>
@@ -54,10 +56,7 @@ export default function Home ({ OnSearch }) {
               type='text'
               placeholder='Search for the stock...'
               value={query}
-              onChange={e => {
-                setQuery(e.target.value)
-                setSearchQuery(e.target.value)
-              }}
+              onChange={e => setQuery(e.target.value)}
               className='bg-[#09090B] rounded-lg w-full h-12 md:h-14 text-white px-4 focus:outline-none border-2 border-teal-500 focus:border-white transition'
             />
             {filteredResults.length > 0 && (
@@ -67,7 +66,7 @@ export default function Home ({ OnSearch }) {
                     key={item.instrument_key}
                     className='px-4 py-2 text-white hover:bg-teal-500 cursor-pointer'
                     onClick={() => {
-                      // setQuery(item.name)
+                      setQuery(item.name)
                       setSearchQuery('')
                       setFilteredResults([])
                       navigate(`/${item.instrument_key}`, { replace: false })
@@ -79,14 +78,7 @@ export default function Home ({ OnSearch }) {
               </ul>
             )}
           </div>
-          {/* <button
-            type='submit'
-            className='bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition mt-2 w-full'
-          >
-            Search
-          </button> */}
         </form>
-        {/* <div className='text-white pt-4 text-lg'>Or Analyze</div> */}
       </div>
     </>
   )
