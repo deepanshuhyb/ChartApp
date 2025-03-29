@@ -11,7 +11,6 @@ const NavbarwithSearch = () => {
   const [searchData, setSearchData] = useState([])
   const [filteredResults, setFilteredResults] = useState([])
   const menuRef = useRef(null)
-  const debounceRef = useRef(null)
 
   useEffect(() => {
     fetch('/complete.json')
