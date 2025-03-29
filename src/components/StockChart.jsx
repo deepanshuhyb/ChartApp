@@ -256,6 +256,58 @@ export default function StockChart () {
             </>
           )}
         </div>
+        <div className='pb-12'>
+          <div className='mt-10 p-6 rounded-lg shadow-xl w-full max-w-7xl bg-[#18181B] text-white'>
+            <h2 className='text-2xl font-bold mb-4'>
+              Understanding Candlestick Charts
+            </h2>
+            <p className='mb-4'>
+              Candlestick charts are a type of financial chart used to represent
+              the price movements of an asset over a specific timeframe. Each
+              "candlestick" shows four important pieces of information:
+            </p>
+            <ul className='list-disc list-inside mb-4'>
+              <li>
+                <strong>Open:</strong> The price at which the asset started
+                trading during the selected timeframe.
+              </li>
+              <li>
+                <strong>High:</strong> The highest price reached during the
+                timeframe.
+              </li>
+              <li>
+                <strong>Low:</strong> The lowest price reached during the
+                timeframe.
+              </li>
+              <li>
+                <strong>Close:</strong> The price at which the asset finished
+                trading during the timeframe.
+              </li>
+            </ul>
+            <p className='mb-4'>
+              A green (or hollow) candlestick indicates that the closing price
+              was higher than the opening price (bullish), while a red (or
+              filled) candlestick indicates that the closing price was lower
+              than the opening price (bearish).
+            </p>
+            <h3 className='text-xl font-semibold mb-2'>
+              How to Read Candlestick Patterns
+            </h3>
+            <p className='mb-4'>
+              Certain patterns, such as <strong>Doji</strong>,{' '}
+              <strong>Hammer</strong>, and <strong>Shooting Star</strong>, can
+              provide insights into potential price reversals or continuations.
+              Learning these patterns can enhance your trading strategy.
+            </p>
+            <a
+              href='https://zerodha.com/varsity/chapter/understanding-candlestick-patterns/'
+              target='_blank'
+              className='mt-4 px-4 py-2 rounded-lg border-2 font-semibold transition hover:bg-gray-700 text-white'
+            >
+              Learn More
+            </a>
+          </div>
+        </div>
 
         <div className='gap-2 flex items-center'></div>
       </div>

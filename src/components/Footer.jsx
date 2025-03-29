@@ -11,7 +11,11 @@ export default function Footer () {
         rel='noopener noreferrer'
         className='ml-2'
       >
-        <img src={github} alt='GitHub' className='w-6 h-6' />
+        <img
+          src={github}
+          alt='GitHub'
+          className='w-6 h-6 hover:scale-125 transition-transform duration-300'
+        />
       </a>
       <a
         href='https://www.linkedin.com/in/deepanshuhybr/'
@@ -19,7 +23,11 @@ export default function Footer () {
         rel='noopener noreferrer'
         className='ml-2'
       >
-        <img src={linkedin} alt='Linkedin' className='w-6 h-6' />
+        <img
+          src={linkedin}
+          alt='Linkedin'
+          className='w-6 h-6 hover:scale-125 transition-transform duration-300'
+        />
       </a>
     </div>
   )

@@ -26,15 +26,21 @@ const Navbar = () => {
     <div className='h-14 md:h-20 bg-[#0C0C10] w-full px-6 flex justify-between items-center shadow-lg border-b border-white'>
       <h1 className='text-xl md:pl-16 md:text-2xl text-[#FFD700]'>ChartApp</h1>
       <div className='hidden md:flex gap-8 pr-16'>
-        <a href='/' className='text-white hover:text-[#FFD700] transition'>
+        <a
+          href='/'
+          className='text-white hover:text-[#FFD700] transition-transform hover:scale-125 duration-300'
+        >
           Home
         </a>
-        <a href='/api' className='text-white hover:text-[#FFD700] transition'>
+        <a
+          href='/api'
+          className='text-white hover:text-[#FFD700] transition-transform hover:scale-125 duration-300'
+        >
           API Reference
         </a>
         <a
           href='/contact'
-          className='text-white hover:text-[#FFD700] transition'
+          className='text-white hover:text-[#FFD700] transition-transform hover:scale-125 duration-300'
         >
           Contact
         </a>
